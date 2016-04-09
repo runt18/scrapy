@@ -973,7 +973,7 @@ class IReactorSocket(Interface):
 
 class IReactorProcess(Interface):
 
-    def spawnProcess(processProtocol, executable, args=(), env={}, path=None,
+    def spawnProcess(processProtocol, executable, args=(), env=None, path=None,
                      uid=None, gid=None, usePTY=0, childFDs=None):
         """
         Spawn a process, with a process protocol.
@@ -1056,6 +1056,8 @@ class IReactorProcess(Interface):
         @raise OSError: Raised with errno C{EAGAIN} or C{ENOMEM} if there are
                         insufficient system resources to create a new process.
         """
+        if env is None:
+            env = {}
 
 class IReactorTime(Interface):
     """

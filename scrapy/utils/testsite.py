@@ -10,7 +10,7 @@ class SiteTest(object):
     def setUp(self):
         super(SiteTest, self).setUp()
         self.site = reactor.listenTCP(0, test_site(), interface="127.0.0.1")
-        self.baseurl = "http://localhost:%d/" % self.site.getHost().port
+        self.baseurl = "http://localhost:{0:d}/".format(self.site.getHost().port)
 
     def tearDown(self):
         super(SiteTest, self).tearDown()
@@ -32,5 +32,5 @@ def test_site():
 
 if __name__ == '__main__':
     port = reactor.listenTCP(0, test_site(), interface="127.0.0.1")
-    print("http://localhost:%d/" % port.getHost().port)
+    print("http://localhost:{0:d}/".format(port.getHost().port))
     reactor.run()

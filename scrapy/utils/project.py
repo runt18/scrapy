@@ -18,7 +18,7 @@ def inside_project():
         try:
             import_module(scrapy_module)
         except ImportError as exc:
-            warnings.warn("Cannot import scrapy settings module %s: %s" % (scrapy_module, exc))
+            warnings.warn("Cannot import scrapy settings module {0!s}: {1!s}".format(scrapy_module, exc))
         else:
             return True
     return bool(closest_scrapy_cfg())

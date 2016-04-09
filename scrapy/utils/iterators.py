@@ -26,8 +26,8 @@ def xmliter(obj, nodename):
     """
     nodename_patt = re.escape(nodename)
 
-    HEADER_START_RE = re.compile(r'^(.*?)<\s*%s(?:\s|>)' % nodename_patt, re.S)
-    HEADER_END_RE = re.compile(r'<\s*/%s\s*>' % nodename_patt, re.S)
+    HEADER_START_RE = re.compile(r'^(.*?)<\s*{0!s}(?:\s|>)'.format(nodename_patt), re.S)
+    HEADER_END_RE = re.compile(r'<\s*/{0!s}\s*>'.format(nodename_patt), re.S)
     text = _body_or_str(obj)
 
     header_start = re.search(HEADER_START_RE, text)
@@ -35,7 +35,7 @@ def xmliter(obj, nodename):
     header_end = re_rsearch(HEADER_END_RE, text)
     header_end = text[header_end[1]:].strip() if header_end else ''
 
-    r = re.compile(r'<%(np)s[\s>].*?</%(np)s>' % {'np': nodename_patt}, re.DOTALL)
+    r = re.compile(r'<{np!s}[\s>].*?</{np!s}>'.format(**{'np': nodename_patt}), re.DOTALL)
     for match in r.finditer(text):
         nodetext = header_start + match.group() + header_end
         yield Selector(text=nodetext, type='xml').xpath('//' + nodename)[0]
@@ -44,9 +44,9 @@ def xmliter(obj, nodename):
 def xmliter_lxml(obj, nodename, namespace=None, prefix='x'):
     from lxml import etree
     reader = _StreamReader(obj)
-    tag = '{%s}%s' % (namespace, nodename) if namespace else nodename
+    tag = '{{{0!s}}}{1!s}'.format(namespace, nodename) if namespace else nodename
     iterable = etree.iterparse(reader, tag=tag, encoding=reader.encoding)
-    selxpath = '//' + ('%s:%s' % (prefix, nodename) if namespace else nodename)
+    selxpath = '//' + ('{0!s}:{1!s}'.format(prefix, nodename) if namespace else nodename)
     for _, node in iterable:
         nodetext = etree.tostring(node, encoding='unicode')
         node.clear()
@@ -130,7 +130,7 @@ def csviter(obj, delimiter=None, headers=None, encoding=None, quotechar=None):
 def _body_or_str(obj, unicode=True):
     expected_types = (Response, six.text_type, six.binary_type)
     assert isinstance(obj, expected_types), \
-        "obj must be %s, not %s" % (
+        "obj must be {0!s}, not {1!s}".format(
             " or ".join(t.__name__ for t in expected_types),
             type(obj).__name__)
     if isinstance(obj, Response):

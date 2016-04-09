@@ -87,10 +87,10 @@ class StartprojectTemplatesTest(ProjectTest):
             pass
         assert exists(join(self.tmpl_proj, 'root_template'))
 
-        args = ['--set', 'TEMPLATES_DIR=%s' % self.tmpl]
+        args = ['--set', 'TEMPLATES_DIR={0!s}'.format(self.tmpl)]
         p = self.proc('startproject', self.project_name, *args)
         out = to_native_str(retry_on_eintr(p.stdout.read))
-        self.assertIn("New Scrapy project %r, using template directory" % self.project_name, out)
+        self.assertIn("New Scrapy project {0!r}, using template directory".format(self.project_name), out)
         self.assertIn(self.tmpl_proj, out)
         assert exists(join(self.proj_path, 'root_template'))
 
@@ -101,7 +101,7 @@ class CommandTest(ProjectTest):
         super(CommandTest, self).setUp()
         self.call('startproject', self.project_name)
         self.cwd = join(self.temp_path, self.project_name)
-        self.env['SCRAPY_SETTINGS_MODULE'] = '%s.settings' % self.project_name
+        self.env['SCRAPY_SETTINGS_MODULE'] = '{0!s}.settings'.format(self.project_name)
 
 
 class GenspiderCommandTest(CommandTest):
@@ -115,15 +115,15 @@ class GenspiderCommandTest(CommandTest):
         assert exists(join(self.proj_mod_path, 'spiders', 'test_name.py'))
 
     def test_template(self, tplname='crawl'):
-        args = ['--template=%s' % tplname] if tplname else []
+        args = ['--template={0!s}'.format(tplname)] if tplname else []
         spname = 'test_spider'
         p = self.proc('genspider', spname, 'test.com', *args)
         out = to_native_str(retry_on_eintr(p.stdout.read))
-        self.assertIn("Created spider %r using template %r in module" % (spname, tplname), out)
+        self.assertIn("Created spider {0!r} using template {1!r} in module".format(spname, tplname), out)
         self.assertTrue(exists(join(self.proj_mod_path, 'spiders', 'test_spider.py')))
         p = self.proc('genspider', spname, 'test.com', *args)
         out = to_native_str(retry_on_eintr(p.stdout.read))
-        self.assertIn("Spider %r already exists in module" % spname, out)
+        self.assertIn("Spider {0!r} already exists in module".format(spname), out)
 
     def test_template_basic(self):
         self.test_template('basic')
@@ -143,7 +143,7 @@ class GenspiderCommandTest(CommandTest):
 
     def test_same_name_as_project(self):
         self.assertEqual(2, self.call('genspider', self.project_name))
-        assert not exists(join(self.proj_mod_path, 'spiders', '%s.py' % self.project_name))
+        assert not exists(join(self.proj_mod_path, 'spiders', '{0!s}.py'.format(self.project_name)))
 
 
 class MiscCommandsTest(CommandTest):
@@ -255,8 +255,8 @@ class MyPipeline(object):
         fname = abspath(join(self.proj_mod_path, 'settings.py'))
         with open(fname, 'a') as f:
             f.write("""
-ITEM_PIPELINES = {'%s.pipelines.MyPipeline': 1}
-""" % self.project_name)
+ITEM_PIPELINES = {{'{0!s}.pipelines.MyPipeline': 1}}
+""".format(self.project_name))
 
     @defer.inlineCallbacks
     def test_spider_arguments(self):

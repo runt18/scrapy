@@ -44,7 +44,7 @@ class Slot(object):
 
     def __repr__(self):
         cls_name = self.__class__.__name__
-        return "%s(concurrency=%r, delay=%0.2f, randomize_delay=%r)" % (
+        return "{0!s}(concurrency={1!r}, delay={2:0.2f}, randomize_delay={3!r})".format(
             cls_name, self.concurrency, self.delay, self.randomize_delay)
 
     def __str__(self):
@@ -61,8 +61,7 @@ class Slot(object):
 def _get_concurrency_delay(concurrency, spider, settings):
     delay = settings.getfloat('DOWNLOAD_DELAY')
     if hasattr(spider, 'DOWNLOAD_DELAY'):
-        warnings.warn("%s.DOWNLOAD_DELAY attribute is deprecated, use %s.download_delay instead" %
-                      (type(spider).__name__, type(spider).__name__))
+        warnings.warn("{0!s}.DOWNLOAD_DELAY attribute is deprecated, use {1!s}.download_delay instead".format(type(spider).__name__, type(spider).__name__))
         delay = spider.DOWNLOAD_DELAY
     if hasattr(spider, 'download_delay'):
         delay = spider.download_delay

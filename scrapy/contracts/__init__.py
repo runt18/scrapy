@@ -95,8 +95,8 @@ class Contract(object):
     """ Abstract class for contracts """
 
     def __init__(self, method, *args):
-        self.testcase_pre = _create_testcase(method, '@%s pre-hook' % self.name)
-        self.testcase_post = _create_testcase(method, '@%s post-hook' % self.name)
+        self.testcase_pre = _create_testcase(method, '@{0!s} pre-hook'.format(self.name))
+        self.testcase_post = _create_testcase(method, '@{0!s} post-hook'.format(self.name))
         self.args = args
 
     def add_pre_hook(self, request, results):
@@ -155,8 +155,8 @@ def _create_testcase(method, desc):
 
     class ContractTestCase(TestCase):
         def __str__(_self):
-            return "[%s] %s (%s)" % (spider, method.__name__, desc)
+            return "[{0!s}] {1!s} ({2!s})".format(spider, method.__name__, desc)
 
-    name = '%s_%s' % (spider, method.__name__)
+    name = '{0!s}_{1!s}'.format(spider, method.__name__)
     setattr(ContractTestCase, name, lambda x: x)
     return ContractTestCase(name)

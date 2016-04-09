@@ -110,7 +110,7 @@ class DeprecatedFilesPipeline(FilesPipeline):
     def file_key(self, url):
         media_guid = hashlib.sha1(to_bytes(url)).hexdigest()
         media_ext = os.path.splitext(url)[1]
-        return 'empty/%s%s' % (media_guid, media_ext)
+        return 'empty/{0!s}{1!s}'.format(media_guid, media_ext)
 
 
 class DeprecatedFilesPipelineTestCase(unittest.TestCase):

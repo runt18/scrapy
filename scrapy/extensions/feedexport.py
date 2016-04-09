@@ -137,7 +137,7 @@ class FTPFeedStorage(BlockingFeedStorage):
         ftp.login(self.username, self.password)
         dirname, filename = posixpath.split(self.path)
         ftp_makedirs_cwd(ftp, dirname)
-        ftp.storbinary('STOR %s' % filename, file)
+        ftp.storbinary('STOR {0!s}'.format(filename), file)
         ftp.quit()
 
 

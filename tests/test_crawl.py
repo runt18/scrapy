@@ -50,7 +50,7 @@ class CrawlTestCase(TestCase):
         avgd = totaltime / (len(t) - 1)
         tolerance = 0.6 if randomize else 0.2
         self.assertTrue(avgd > delay * (1 - tolerance),
-                        "download delay too small: %s" % avgd)
+                        "download delay too small: {0!s}".format(avgd))
 
     @defer.inlineCallbacks
     def test_timeout_success(self):

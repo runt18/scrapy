@@ -905,7 +905,7 @@ def _parseServer(description, factory, default=None):
         for plugin in getPlugins(IStreamServerEndpointStringParser):
             if plugin.prefix == endpointType:
                 return (plugin, args[1:], kw)
-        raise ValueError("Unknown endpoint type: '%s'" % (endpointType,))
+        raise ValueError("Unknown endpoint type: '{0!s}'".format(endpointType))
     return (endpointType.upper(),) + parser(factory, *args[1:], **kw)
 
 
@@ -1242,7 +1242,7 @@ def clientFromString(reactor, description):
         if plugin.prefix.upper() == name:
             return plugin.parseStreamClient(*args, **kwargs)
     if name not in _clientParsers:
-        raise ValueError("Unknown endpoint type: %r" % (aname,))
+        raise ValueError("Unknown endpoint type: {0!r}".format(aname))
     kwargs = _clientParsers[name](*args, **kwargs)
     return _endpointClientFactories[name](reactor, **kwargs)
 

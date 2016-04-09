@@ -71,12 +71,12 @@ class CookiesMiddleware(object):
 
     def _format_cookie(self, cookie):
         # build cookie string
-        cookie_str = '%s=%s' % (cookie['name'], cookie['value'])
+        cookie_str = '{0!s}={1!s}'.format(cookie['name'], cookie['value'])
 
         if cookie.get('path', None):
-            cookie_str += '; Path=%s' % cookie['path']
+            cookie_str += '; Path={0!s}'.format(cookie['path'])
         if cookie.get('domain', None):
-            cookie_str += '; Domain=%s' % cookie['domain']
+            cookie_str += '; Domain={0!s}'.format(cookie['domain'])
 
         return cookie_str
 

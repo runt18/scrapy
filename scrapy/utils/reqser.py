@@ -70,7 +70,7 @@ def _find_method(obj, func):
         else:
             if func_self is obj:
                 return six.get_method_function(func).__name__
-    raise ValueError("Function %s is not a method of: %s" % (func, obj))
+    raise ValueError("Function {0!s} is not a method of: {1!s}".format(func, obj))
 
 
 def _get_method(obj, name):
@@ -78,4 +78,4 @@ def _get_method(obj, name):
     try:
         return getattr(obj, name)
     except AttributeError:
-        raise ValueError("Method %r not found in: %s" % (name, obj))
+        raise ValueError("Method {0!r} not found in: {1!s}".format(name, obj))

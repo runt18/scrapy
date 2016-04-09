@@ -54,7 +54,7 @@ def response_status_message(status):
     >>> response_status_message(404)
     '404 Not Found'
     """
-    return '%s %s' % (status, to_native_str(http.RESPONSES.get(int(status))))
+    return '{0!s} {1!s}'.format(status, to_native_str(http.RESPONSES.get(int(status))))
 
 
 def response_httprepr(response):
@@ -80,15 +80,15 @@ def open_in_browser(response, _openfunc=webbrowser.open):
     body = response.body
     if isinstance(response, HtmlResponse):
         if b'<base' not in body:
-            repl = '<head><base href="%s">' % response.url
+            repl = '<head><base href="{0!s}">'.format(response.url)
             body = body.replace(b'<head>', to_bytes(repl))
         ext = '.html'
     elif isinstance(response, TextResponse):
         ext = '.txt'
     else:
-        raise TypeError("Unsupported response type: %s" %
-                        response.__class__.__name__)
+        raise TypeError("Unsupported response type: {0!s}".format(
+                        response.__class__.__name__))
     fd, fname = tempfile.mkstemp(ext)
     os.write(fd, body)
     os.close(fd)
-    return _openfunc("file://%s" % fname)
+    return _openfunc("file://{0!s}".format(fname))

@@ -43,7 +43,7 @@ class DepthMiddleware(object):
                     return False
                 elif self.stats:
                     if self.verbose_stats:
-                        self.stats.inc_value('request_depth_count/%s' % depth,
+                        self.stats.inc_value('request_depth_count/{0!s}'.format(depth),
                                              spider=spider)
                     self.stats.max_value('request_depth_max', depth,
                                          spider=spider)

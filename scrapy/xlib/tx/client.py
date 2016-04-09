@@ -560,7 +560,7 @@ class _AgentBase(object):
         """
         if (scheme, port) in (('http', 80), ('https', 443)):
             return host
-        return '%s:%d' % (host, port)
+        return '{0!s}:{1:d}'.format(host, port)
 
 
     def _requestWithEndpoint(self, key, endpoint, method, parsedURI,
@@ -663,7 +663,7 @@ class Agent(_AgentBase):
                                       self._wrapContextFactory(host, port),
                                       **kwargs)
         else:
-            raise SchemeNotSupported("Unsupported scheme: %r" % (scheme,))
+            raise SchemeNotSupported("Unsupported scheme: {0!r}".format(scheme))
 
 
     def request(self, method, uri, headers=None, bodyProducer=None):

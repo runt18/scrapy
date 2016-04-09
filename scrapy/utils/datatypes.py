@@ -49,7 +49,7 @@ class MultiValueDict(dict):
         dict.__init__(self, key_to_list_mapping)
 
     def __repr__(self):
-        return "<%s: %s>" % (self.__class__.__name__, dict.__repr__(self))
+        return "<{0!s}: {1!s}>".format(self.__class__.__name__, dict.__repr__(self))
 
     def __getitem__(self, key):
         """
@@ -59,7 +59,7 @@ class MultiValueDict(dict):
         try:
             list_ = dict.__getitem__(self, key)
         except KeyError:
-            raise MultiValueDictKeyError("Key %r not found in %r" % (key, self))
+            raise MultiValueDictKeyError("Key {0!r} not found in {1!r}".format(key, self))
         try:
             return list_[-1]
         except IndexError:
@@ -137,7 +137,7 @@ class MultiValueDict(dict):
     def update(self, *args, **kwargs):
         "update() extends rather than replaces existing key lists. Also accepts keyword args."
         if len(args) > 1:
-            raise TypeError("update expected at most 1 arguments, got %d" % len(args))
+            raise TypeError("update expected at most 1 arguments, got {0:d}".format(len(args)))
         if args:
             other_dict = args[0]
             if isinstance(other_dict, MultiValueDict):
@@ -174,10 +174,10 @@ class SiteNode(object):
         node.parent = self
 
     def to_string(self, level=0):
-        s = "%s%s\n" % ('  '*level, self.url)
+        s = "{0!s}{1!s}\n".format('  '*level, self.url)
         if self.itemnames:
             for n in self.itemnames:
-                s += "%sScraped: %s\n" % ('  '*(level+1), n)
+                s += "{0!s}Scraped: {1!s}\n".format('  '*(level+1), n)
         for node in self.children:
             s += node.to_string(level+1)
         return s

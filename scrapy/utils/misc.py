@@ -38,7 +38,7 @@ def load_object(path):
     try:
         dot = path.rindex('.')
     except ValueError:
-        raise ValueError("Error loading object '%s': not a full path" % path)
+        raise ValueError("Error loading object '{0!s}': not a full path".format(path))
 
     module, name = path[:dot], path[dot+1:]
     mod = import_module(module)
@@ -46,7 +46,7 @@ def load_object(path):
     try:
         obj = getattr(mod, name)
     except AttributeError:
-        raise NameError("Module '%s' doesn't define any object named '%s'" % (module, name))
+        raise NameError("Module '{0!s}' doesn't define any object named '{1!s}'".format(module, name))
 
     return obj
 

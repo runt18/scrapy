@@ -52,7 +52,7 @@ class OffsiteMiddleware(object):
         allowed_domains = getattr(spider, 'allowed_domains', None)
         if not allowed_domains:
             return re.compile('') # allow all by default
-        regex = r'^(.*\.)?(%s)$' % '|'.join(re.escape(d) for d in allowed_domains if d is not None)
+        regex = r'^(.*\.)?({0!s})$'.format('|'.join(re.escape(d) for d in allowed_domains if d is not None))
         return re.compile(regex)
 
     def spider_opened(self, spider):

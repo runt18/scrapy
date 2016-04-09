@@ -28,7 +28,7 @@ def get_engine_status(engine):
         try:
             checks += [(test, eval(test))]
         except Exception as e:
-            checks += [(test, "%s (exception)" % type(e).__name__)]
+            checks += [(test, "{0!s} (exception)".format(type(e).__name__))]
 
     return checks
 
@@ -36,7 +36,7 @@ def format_engine_status(engine=None):
     checks = get_engine_status(engine)
     s = "Execution engine status\n\n"
     for test, result in checks:
-        s += "%-47s : %s\n" % (test, result)
+        s += "{0:<47!s} : {1!s}\n".format(test, result)
     s += "\n"
 
     return s

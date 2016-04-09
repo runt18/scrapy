@@ -15,18 +15,18 @@ class DownloaderStats(object):
 
     def process_request(self, request, spider):
         self.stats.inc_value('downloader/request_count', spider=spider)
-        self.stats.inc_value('downloader/request_method_count/%s' % request.method, spider=spider)
+        self.stats.inc_value('downloader/request_method_count/{0!s}'.format(request.method), spider=spider)
         reqlen = len(request_httprepr(request))
         self.stats.inc_value('downloader/request_bytes', reqlen, spider=spider)
 
     def process_response(self, request, response, spider):
         self.stats.inc_value('downloader/response_count', spider=spider)
-        self.stats.inc_value('downloader/response_status_count/%s' % response.status, spider=spider)
+        self.stats.inc_value('downloader/response_status_count/{0!s}'.format(response.status), spider=spider)
         reslen = len(response_httprepr(response))
         self.stats.inc_value('downloader/response_bytes', reslen, spider=spider)
         return response
 
     def process_exception(self, request, exception, spider):
-        ex_class = "%s.%s" % (exception.__class__.__module__, exception.__class__.__name__)
+        ex_class = "{0!s}.{1!s}".format(exception.__class__.__module__, exception.__class__.__name__)
         self.stats.inc_value('downloader/exception_count', spider=spider)
-        self.stats.inc_value('downloader/exception_type_count/%s' % ex_class, spider=spider)
+        self.stats.inc_value('downloader/exception_type_count/{0!s}'.format(ex_class), spider=spider)

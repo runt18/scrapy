@@ -77,7 +77,7 @@ class RedirectMiddlewareTest(unittest.TestCase):
         assert 'Content-Length' not in req2.headers, \
             "Content-Length header must not be present in redirected request"
         assert not req2.body, \
-            "Redirected body must be empty, not '%s'" % req2.body
+            "Redirected body must be empty, not '{0!s}'".format(req2.body)
 
         # response without Location header but with status code is 3XX should be ignored
         del rsp.headers['Location']
@@ -216,7 +216,7 @@ class MetaRefreshMiddlewareTest(unittest.TestCase):
         assert 'Content-Length' not in req2.headers, \
             "Content-Length header must not be present in redirected request"
         assert not req2.body, \
-            "Redirected body must be empty, not '%s'" % req2.body
+            "Redirected body must be empty, not '{0!s}'".format(req2.body)
 
     def test_max_redirect_times(self):
         self.mw.max_redirect_times = 1

@@ -14,9 +14,9 @@ def deprecated(use_instead=None):
     def deco(func):
         @wraps(func)
         def wrapped(*args, **kwargs):
-            message = "Call to deprecated function %s." % func.__name__
+            message = "Call to deprecated function {0!s}.".format(func.__name__)
             if use_instead:
-                message += " Use %s instead." % use_instead
+                message += " Use {0!s} instead.".format(use_instead)
             warnings.warn(message, category=ScrapyDeprecationWarning, stacklevel=2)
             return func(*args, **kwargs)
         return wrapped

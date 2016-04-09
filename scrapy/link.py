@@ -23,7 +23,7 @@ class Link(object):
                 url = to_bytes(url, encoding='utf8')
             else:
                 got = url.__class__.__name__
-                raise TypeError("Link urls must be str objects, got %s" % got)
+                raise TypeError("Link urls must be str objects, got {0!s}".format(got))
         self.url = url
         self.text = text
         self.fragment = fragment
@@ -37,6 +37,5 @@ class Link(object):
         return hash(self.url) ^ hash(self.text) ^ hash(self.fragment) ^ hash(self.nofollow)
 
     def __repr__(self):
-        return 'Link(url=%r, text=%r, fragment=%r, nofollow=%r)' % \
-            (self.url, self.text, self.fragment, self.nofollow)
+        return 'Link(url={0!r}, text={1!r}, fragment={2!r}, nofollow={3!r})'.format(self.url, self.text, self.fragment, self.nofollow)
 

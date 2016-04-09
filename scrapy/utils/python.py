@@ -183,7 +183,7 @@ def isbinarytext(text):
     otherwise, by looking for binary bytes at their chars
     """
     if not isinstance(text, bytes):
-        raise TypeError("text must be bytes, got '%s'" % type(text).__name__)
+        raise TypeError("text must be bytes, got '{0!s}'".format(type(text).__name__))
     return any(c in _BINARYCHARS for c in text)
 
 
@@ -208,7 +208,7 @@ def get_func_args(func, stripself=False):
         else:
             return get_func_args(func.__call__, True)
     else:
-        raise TypeError('%s is not callable' % type(func))
+        raise TypeError('{0!s} is not callable'.format(type(func)))
     if stripself:
         func_args.pop(0)
     return func_args
@@ -241,7 +241,7 @@ def get_spec(func):
     elif hasattr(func, '__call__'):
         spec = inspect.getargspec(func.__call__)
     else:
-        raise TypeError('%s is not callable' % type(func))
+        raise TypeError('{0!s} is not callable'.format(type(func)))
 
     defaults = spec.defaults or []
 

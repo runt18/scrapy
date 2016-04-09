@@ -71,11 +71,11 @@ class XMLFeedSpider(Spider):
         elif self.iterator == 'xml':
             selector = Selector(response, type='xml')
             self._register_namespaces(selector)
-            nodes = selector.xpath('//%s' % self.itertag)
+            nodes = selector.xpath('//{0!s}'.format(self.itertag))
         elif self.iterator == 'html':
             selector = Selector(response, type='html')
             self._register_namespaces(selector)
-            nodes = selector.xpath('//%s' % self.itertag)
+            nodes = selector.xpath('//{0!s}'.format(self.itertag))
         else:
             raise NotSupported('Unsupported node iterator')
 

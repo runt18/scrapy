@@ -41,7 +41,7 @@ class QPSSpider(Spider):
 
         slots = int(self.slots)
         if slots > 1:
-            urls = [url.replace('localhost', '127.0.0.%d' % (x + 1)) for x in xrange(slots)]
+            urls = [url.replace('localhost', '127.0.0.{0:d}'.format((x + 1))) for x in xrange(slots)]
         else:
             urls = [url]
 

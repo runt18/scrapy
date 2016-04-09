@@ -24,7 +24,7 @@ class Request(object_ref):
         self.method = str(method).upper()
         self._set_url(url)
         self._set_body(body)
-        assert isinstance(priority, int), "Request priority not an integer: %r" % priority
+        assert isinstance(priority, int), "Request priority not an integer: {0!r}".format(priority)
         self.priority = priority
 
         assert callback or not errback, "Cannot use errback without a callback"
@@ -48,13 +48,13 @@ class Request(object_ref):
 
     def _set_url(self, url):
         if not isinstance(url, six.string_types):
-            raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)
+            raise TypeError('Request url must be str or unicode, got {0!s}:'.format(type(url).__name__))
 
         url = to_native_str(url, self.encoding)
         self._url = escape_ajax(safe_url_string(url))
 
         if ':' not in self._url:
-            raise ValueError('Missing scheme in request url: %s' % self._url)
+            raise ValueError('Missing scheme in request url: {0!s}'.format(self._url))
 
     url = property(_get_url, obsolete_setter(_set_url, 'url'))
 
@@ -74,7 +74,7 @@ class Request(object_ref):
         return self._encoding
 
     def __str__(self):
-        return "<%s %s>" % (self.method, self.url)
+        return "<{0!s} {1!s}>".format(self.method, self.url)
 
     __repr__ = __str__
 

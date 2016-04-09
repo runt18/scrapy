@@ -34,15 +34,15 @@ class MustbeDeferredTest(unittest.TestCase):
         return dfd
 
 def cb1(value, arg1, arg2):
-    return "(cb1 %s %s %s)" % (value, arg1, arg2)
+    return "(cb1 {0!s} {1!s} {2!s})".format(value, arg1, arg2)
 def cb2(value, arg1, arg2):
-    return defer.succeed("(cb2 %s %s %s)" % (value, arg1, arg2))
+    return defer.succeed("(cb2 {0!s} {1!s} {2!s})".format(value, arg1, arg2))
 def cb3(value, arg1, arg2):
-    return "(cb3 %s %s %s)" % (value, arg1, arg2)
+    return "(cb3 {0!s} {1!s} {2!s})".format(value, arg1, arg2)
 def cb_fail(value, arg1, arg2):
     return Failure(TypeError())
 def eb1(failure, arg1, arg2):
-    return "(eb1 %s %s %s)" % (failure.value.__class__.__name__, arg1, arg2)
+    return "(eb1 {0!s} {1!s} {2!s})".format(failure.value.__class__.__name__, arg1, arg2)
 
 
 class DeferUtilsTest(unittest.TestCase):

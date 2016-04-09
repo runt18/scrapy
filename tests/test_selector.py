@@ -98,8 +98,8 @@ class SelectorTestCase(unittest.TestCase):
         """Check that classes are using slots and are weak-referenceable"""
         x = Selector(text='')
         weakref.ref(x)
-        assert not hasattr(x, '__dict__'), "%s does not use __slots__" % \
-            x.__class__.__name__
+        assert not hasattr(x, '__dict__'), "{0!s} does not use __slots__".format( \
+            x.__class__.__name__)
 
     def test_deprecated_selector_methods(self):
         sel = Selector(TextResponse(url="http://example.com", body=b'<p>some text</p>'))

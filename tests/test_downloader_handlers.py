@@ -100,7 +100,7 @@ class FileTestCase(unittest.TestCase):
         return self.download_request(request, Spider('foo')).addCallback(_test)
 
     def test_non_existent(self):
-        request = Request('file://%s' % self.mktemp())
+        request = Request('file://{0!s}'.format(self.mktemp()))
         d = self.download_request(request, Spider('foo'))
         return self.assertFailure(d, IOError)
 
@@ -151,7 +151,7 @@ class HttpTestCase(unittest.TestCase):
             yield self.download_handler.close()
 
     def getURL(self, path):
-        return "%s://%s:%d/%s" % (self.scheme, self.host, self.portno, path)
+        return "{0!s}://{1!s}:{2:d}/{3!s}".format(self.scheme, self.host, self.portno, path)
 
     def test_download(self):
         request = Request(self.getURL('file'))
@@ -202,7 +202,7 @@ class HttpTestCase(unittest.TestCase):
     def test_host_header_not_in_request_headers(self):
         def _test(response):
             self.assertEquals(
-                response.body, to_bytes('%s:%d' % (self.host, self.portno)))
+                response.body, to_bytes('{0!s}:{1:d}'.format(self.host, self.portno)))
             self.assertEquals(request.headers, {})
 
         request = Request(self.getURL('host'))
@@ -405,7 +405,7 @@ class HttpProxyTestCase(unittest.TestCase):
             yield self.download_handler.close()
 
     def getURL(self, path):
-        return "http://127.0.0.1:%d/%s" % (self.portno, path)
+        return "http://127.0.0.1:{0:d}/{1!s}".format(self.portno, path)
 
     def test_download_with_proxy(self):
         def _test(response):
@@ -423,7 +423,7 @@ class HttpProxyTestCase(unittest.TestCase):
             self.assertEquals(response.url, request.url)
             self.assertEquals(response.body, b'https://example.com')
 
-        http_proxy = '%s?noconnect' % self.getURL('')
+        http_proxy = '{0!s}?noconnect'.format(self.getURL(''))
         request = Request('https://example.com', meta={'proxy': http_proxy})
         return self.download_request(request, Spider('foo')).addCallback(_test)
 
@@ -682,7 +682,7 @@ class FTPTestCase(unittest.TestCase):
         return deferred
 
     def test_ftp_download_success(self):
-        request = Request(url="ftp://127.0.0.1:%s/file.txt" % self.portNum,
+        request = Request(url="ftp://127.0.0.1:{0!s}/file.txt".format(self.portNum),
                 meta={"ftp_user": self.username, "ftp_password": self.password})
         d = self.download_handler.download_request(request, None)
 
@@ -694,7 +694,7 @@ class FTPTestCase(unittest.TestCase):
 
     def test_ftp_download_path_with_spaces(self):
         request = Request(
-            url="ftp://127.0.0.1:%s/file with spaces.txt" % self.portNum,
+            url="ftp://127.0.0.1:{0!s}/file with spaces.txt".format(self.portNum),
             meta={"ftp_user": self.username, "ftp_password": self.password}
         )
         d = self.download_handler.download_request(request, None)
@@ -706,7 +706,7 @@ class FTPTestCase(unittest.TestCase):
         return self._add_test_callbacks(d, _test)
 
     def test_ftp_download_notexist(self):
-        request = Request(url="ftp://127.0.0.1:%s/notexist.txt" % self.portNum,
+        request = Request(url="ftp://127.0.0.1:{0!s}/notexist.txt".format(self.portNum),
                 meta={"ftp_user": self.username, "ftp_password": self.password})
         d = self.download_handler.download_request(request, None)
 
@@ -716,7 +716,7 @@ class FTPTestCase(unittest.TestCase):
 
     def test_ftp_local_filename(self):
         local_fname = "/tmp/file.txt"
-        request = Request(url="ftp://127.0.0.1:%s/file.txt" % self.portNum,
+        request = Request(url="ftp://127.0.0.1:{0!s}/file.txt".format(self.portNum),
                 meta={"ftp_user": self.username, "ftp_password": self.password, "ftp_local_filename": local_fname})
         d = self.download_handler.download_request(request, None)
 
@@ -732,7 +732,7 @@ class FTPTestCase(unittest.TestCase):
     def test_invalid_credentials(self):
         from twisted.protocols.ftp import ConnectionLost
 
-        request = Request(url="ftp://127.0.0.1:%s/file.txt" % self.portNum,
+        request = Request(url="ftp://127.0.0.1:{0!s}/file.txt".format(self.portNum),
                 meta={"ftp_user": self.username, "ftp_password": 'invalid'})
         d = self.download_handler.download_request(request, None)
 

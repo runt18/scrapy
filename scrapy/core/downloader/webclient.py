@@ -89,8 +89,7 @@ class ScrapyHTTPPageGetter(HTTPClient):
             self.transport.stopProducing()
 
         self.factory.noPage(\
-                defer.TimeoutError("Getting %s took longer than %s seconds." % \
-                (self.factory.url, self.factory.timeout)))
+                defer.TimeoutError("Getting {0!s} took longer than {1!s} seconds.".format(self.factory.url, self.factory.timeout)))
 
 
 class ScrapyHTTPClientFactory(HTTPClientFactory):

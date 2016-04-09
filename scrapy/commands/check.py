@@ -19,7 +19,7 @@ class TextTestResult(_TextTestResult):
         plural = "s" if run != 1 else ""
 
         writeln(self.separator2)
-        writeln("Ran %d contract%s in %.3fs" % (run, plural, stop - start))
+        writeln("Ran {0:d} contract{1!s} in {2:.3f}s".format(run, plural, stop - start))
         writeln()
 
         infos = []
@@ -27,14 +27,14 @@ class TextTestResult(_TextTestResult):
             write("FAILED")
             failed, errored = map(len, (self.failures, self.errors))
             if failed:
-                infos.append("failures=%d" % failed)
+                infos.append("failures={0:d}".format(failed))
             if errored:
-                infos.append("errors=%d" % errored)
+                infos.append("errors={0:d}".format(errored))
         else:
             write("OK")
 
         if infos:
-            writeln(" (%s)" % (", ".join(infos),))
+            writeln(" ({0!s})".format(", ".join(infos)))
         else:
             write("\n")
 
@@ -86,7 +86,7 @@ class Command(ScrapyCommand):
                     continue
                 print(spider)
                 for method in sorted(methods):
-                    print('  * %s' % method)
+                    print('  * {0!s}'.format(method))
         else:
             start = time.time()
             self.crawler_process.start()

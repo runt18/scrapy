@@ -217,7 +217,7 @@ class DbmCacheStorage(object):
         self.db = None
 
     def open_spider(self, spider):
-        dbpath = os.path.join(self.cachedir, '%s.db' % spider.name)
+        dbpath = os.path.join(self.cachedir, '{0!s}.db'.format(spider.name))
         self.db = self.dbmodule.open(dbpath, 'c')
 
     def close_spider(self, spider):
@@ -243,13 +243,13 @@ class DbmCacheStorage(object):
             'headers': dict(response.headers),
             'body': response.body,
         }
-        self.db['%s_data' % key] = pickle.dumps(data, protocol=2)
-        self.db['%s_time' % key] = str(time())
+        self.db['{0!s}_data'.format(key)] = pickle.dumps(data, protocol=2)
+        self.db['{0!s}_time'.format(key)] = str(time())
 
     def _read_data(self, spider, request):
         key = self._request_key(request)
         db = self.db
-        tkey = '%s_time' % key
+        tkey = '{0!s}_time'.format(key)
         if tkey not in db:
             return  # not found
 
@@ -257,7 +257,7 @@ class DbmCacheStorage(object):
         if 0 < self.expiration_secs < time() - float(ts):
             return  # expired
 
-        return pickle.loads(db['%s_data' % key])
+        return pickle.loads(db['{0!s}_data'.format(key)])
 
     def _request_key(self, request):
         return request_fingerprint(request)
@@ -345,7 +345,7 @@ class LeveldbCacheStorage(object):
         self.db = None
 
     def open_spider(self, spider):
-        dbpath = os.path.join(self.cachedir, '%s.leveldb' % spider.name)
+        dbpath = os.path.join(self.cachedir, '{0!s}.leveldb'.format(spider.name))
         self.db = self._leveldb.LevelDB(dbpath)
 
     def close_spider(self, spider):

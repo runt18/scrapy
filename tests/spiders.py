@@ -33,7 +33,7 @@ class FollowAllSpider(MetaSpider):
         self.urls_visited = []
         self.times = []
         qargs = {'total': total, 'show': show, 'order': order, 'maxlatency': maxlatency}
-        url = "http://localhost:8998/follow?%s" % urlencode(qargs, doseq=1)
+        url = "http://localhost:8998/follow?{0!s}".format(urlencode(qargs, doseq=1))
         self.start_urls = [url]
 
     def parse(self, response):
@@ -55,7 +55,7 @@ class DelaySpider(MetaSpider):
 
     def start_requests(self):
         self.t1 = time.time()
-        url = "http://localhost:8998/delay?n=%s&b=%s" % (self.n, self.b)
+        url = "http://localhost:8998/delay?n={0!s}&b={1!s}".format(self.n, self.b)
         yield Request(url, callback=self.parse, errback=self.errback)
 
     def parse(self, response):
@@ -74,7 +74,7 @@ class SimpleSpider(MetaSpider):
         self.start_urls = [url]
 
     def parse(self, response):
-        self.logger.info("Got response %d" % response.status)
+        self.logger.info("Got response {0:d}".format(response.status))
 
 
 class ItemSpider(FollowAllSpider):
@@ -121,7 +121,7 @@ class BrokenStartRequestsSpider(FollowAllSpider):
 
         for s in range(100):
             qargs = {'total': 10, 'seed': s}
-            url = "http://localhost:8998/follow?%s" % urlencode(qargs, doseq=1)
+            url = "http://localhost:8998/follow?{0!s}".format(urlencode(qargs, doseq=1))
             yield Request(url, meta={'seed': s})
             if self.fail_yielding:
                 2 / 0
@@ -169,7 +169,7 @@ class DuplicateStartRequestsSpider(Spider):
     def start_requests(self):
         for i in range(0, self.distinct_urls):
             for j in range(0, self.dupe_factor):
-                url = "http://localhost:8998/echo?headers=1&body=test%d" % i
+                url = "http://localhost:8998/echo?headers=1&body=test{0:d}".format(i)
                 yield self.make_requests_from_url(url)
 
     def make_requests_from_url(self, url):

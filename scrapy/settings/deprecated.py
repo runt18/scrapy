@@ -22,5 +22,5 @@ def check_deprecated_settings(settings):
     if deprecated:
         msg = "You are using the following settings which are deprecated or obsolete"
         msg += " (ask scrapy-users@googlegroups.com for alternatives):"
-        msg = msg + "\n    " + "\n    ".join("%s: %s" % x for x in deprecated)
+        msg = msg + "\n    " + "\n    ".join("{0!s}: {1!s}".format(*x) for x in deprecated)
         warnings.warn(msg, ScrapyDeprecationWarning)

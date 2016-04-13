@@ -250,7 +250,7 @@ class WebClientTestCase(unittest.TestCase):
         return self.port.stopListening()
 
     def getURL(self, path):
-        return "http://127.0.0.1:%d/%s" % (self.portno, path)
+        return "http://127.0.0.1:{0:d}/{1!s}".format(self.portno, path)
 
     def testPayload(self):
         s = "0123456789" * 10
@@ -262,7 +262,7 @@ class WebClientTestCase(unittest.TestCase):
         # it should extract from url
         return defer.gatherResults([
             getPage(self.getURL("host")).addCallback(
-                self.assertEquals, to_bytes("127.0.0.1:%d" % self.portno)),
+                self.assertEquals, to_bytes("127.0.0.1:{0:d}".format(self.portno))),
             getPage(self.getURL("host"), headers={"Host": "www.example.com"}).addCallback(
                 self.assertEquals, to_bytes("www.example.com"))])
 
@@ -298,7 +298,7 @@ class WebClientTestCase(unittest.TestCase):
         """
         d = getPage(self.getURL("host"), timeout=100)
         d.addCallback(
-            self.assertEquals, to_bytes("127.0.0.1:%d" % self.portno))
+            self.assertEquals, to_bytes("127.0.0.1:{0:d}".format(self.portno)))
         return d
 
 

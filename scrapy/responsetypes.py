@@ -46,7 +46,7 @@ class ResponseTypes(object):
         elif mimetype in self.classes:
             return self.classes[mimetype]
         else:
-            basetype = "%s/*" % mimetype.split('/')[0]
+            basetype = "{0!s}/*".format(mimetype.split('/')[0])
             return self.classes.get(basetype, Response)
 
     def from_content_type(self, content_type, content_encoding=None):

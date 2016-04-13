@@ -124,7 +124,7 @@ class S3FilesStore(object):
         return c.get_bucket(self.bucket, validate=False)
 
     def _get_boto_key(self, path):
-        key_name = '%s%s' % (self.prefix, path)
+        key_name = '{0!s}{1!s}'.format(self.prefix, path)
         if self.is_botocore:
             return threads.deferToThread(
                 self.s3_client.head_object,
@@ -136,7 +136,7 @@ class S3FilesStore(object):
 
     def persist_file(self, path, buf, info, meta=None, headers=None):
         """Upload file to S3 storage"""
-        key_name = '%s%s' % (self.prefix, path)
+        key_name = '{0!s}{1!s}'.format(self.prefix, path)
         buf.seek(0)
         if self.is_botocore:
             extra = self._headers_to_botocore_kwargs(self.HEADERS)
@@ -187,7 +187,7 @@ class S3FilesStore(object):
                 kwarg = mapping[key]
             except KeyError:
                 raise TypeError(
-                    'Header "%s" is not supported by botocore' % key)
+                    'Header "{0!s}" is not supported by botocore'.format(key))
             else:
                 extra[kwarg] = value
         return extra
@@ -355,7 +355,7 @@ class FilesPipeline(MediaPipeline):
 
     def inc_stats(self, spider, status):
         spider.crawler.stats.inc_value('file_count', spider=spider)
-        spider.crawler.stats.inc_value('file_status_count/%s' % status, spider=spider)
+        spider.crawler.stats.inc_value('file_status_count/{0!s}'.format(status), spider=spider)
 
     ### Overridable Interface
     def get_media_requests(self, item, info):
@@ -397,7 +397,7 @@ class FilesPipeline(MediaPipeline):
 
         media_guid = hashlib.sha1(to_bytes(url)).hexdigest()  # change to request.url after deprecation
         media_ext = os.path.splitext(url)[1]  # change to request.url after deprecation
-        return 'full/%s%s' % (media_guid, media_ext)
+        return 'full/{0!s}{1!s}'.format(media_guid, media_ext)
 
     # deprecated
     def file_key(self, url):

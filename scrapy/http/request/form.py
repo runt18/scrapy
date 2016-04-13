@@ -68,15 +68,15 @@ def _get_form(response, formname, formid, formnumber, formxpath):
                             base_url=get_base_url(response))
     forms = root.xpath('//form')
     if not forms:
-        raise ValueError("No <form> element found in %s" % response)
+        raise ValueError("No <form> element found in {0!s}".format(response))
 
     if formname is not None:
-        f = root.xpath('//form[@name="%s"]' % formname)
+        f = root.xpath('//form[@name="{0!s}"]'.format(formname))
         if f:
             return f[0]
 
     if formid is not None:
-        f = root.xpath('//form[@id="%s"]' % formid)
+        f = root.xpath('//form[@id="{0!s}"]'.format(formid))
         if f:
             return f[0]
 
@@ -92,7 +92,7 @@ def _get_form(response, formname, formid, formnumber, formxpath):
                 if el is None:
                     break
         encoded = formxpath if six.PY3 else formxpath.encode('unicode_escape')
-        raise ValueError('No <form> element found with %s' % encoded)
+        raise ValueError('No <form> element found with {0!s}'.format(encoded))
 
     # If we get here, it means that either formname was None
     # or invalid
@@ -100,8 +100,7 @@ def _get_form(response, formname, formid, formnumber, formxpath):
         try:
             form = forms[formnumber]
         except IndexError:
-            raise IndexError("Form number %d not found in %s" %
-                             (formnumber, response))
+            raise IndexError("Form number {0:d} not found in {1!s}".format(formnumber, response))
         else:
             return form
 
@@ -192,7 +191,7 @@ def _get_clickable(clickdata, form):
     # We didn't find it, so now we build an XPath expression out of the other
     # arguments, because they can be used as such
     xpath = u'.//*' + \
-            u''.join(u'[@%s="%s"]' % c for c in six.iteritems(clickdata))
+            u''.join(u'[@{0!s}="{1!s}"]'.format(*c) for c in six.iteritems(clickdata))
     el = form.xpath(xpath)
     if len(el) == 1:
         return (el[0].get('name'), el[0].get('value') or '')
@@ -200,4 +199,4 @@ def _get_clickable(clickdata, form):
         raise ValueError("Multiple elements found (%r) matching the criteria "
                          "in clickdata: %r" % (el, clickdata))
     else:
-        raise ValueError('No clickable element matching clickdata: %r' % (clickdata,))
+        raise ValueError('No clickable element matching clickdata: {0!r}'.format(clickdata))

@@ -34,7 +34,7 @@ class HttpProxyMiddleware(object):
 
         if user:
             user_pass = to_bytes(
-                '%s:%s' % (unquote(user), unquote(password)),
+                '{0!s}:{1!s}'.format(unquote(user), unquote(password)),
                 encoding=self.auth_encoding)
             creds = base64.b64encode(user_pass).strip()
         else:

@@ -12,7 +12,7 @@ class CustomItem(Item):
     name = Field()
 
     def __str__(self):
-        return "name: %s" % self['name']
+        return "name: {0!s}".format(self['name'])
 
 
 class LoggingContribTest(unittest.TestCase):

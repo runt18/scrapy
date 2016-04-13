@@ -102,11 +102,11 @@ class DeprecatedImagesPipeline(ImagesPipeline):
 
     def image_key(self, url):
         image_guid = hashlib.sha1(to_bytes(url)).hexdigest()
-        return 'empty/%s.jpg' % (image_guid)
+        return 'empty/{0!s}.jpg'.format((image_guid))
 
     def thumb_key(self, url, thumb_id):
         thumb_guid = hashlib.sha1(to_bytes(url)).hexdigest()
-        return 'thumbsup/%s/%s.jpg' % (thumb_id, thumb_guid)
+        return 'thumbsup/{0!s}/{1!s}.jpg'.format(thumb_id, thumb_guid)
 
 
 class DeprecatedImagesPipelineTestCase(unittest.TestCase):

@@ -48,7 +48,7 @@ class TestMiddlewareManager(MiddlewareManager):
 
     @classmethod
     def _get_mwlist_from_settings(cls, settings):
-        return ['tests.test_middleware.%s' % x for x in ['M1', 'MOff', 'M3']]
+        return ['tests.test_middleware.{0!s}'.format(x) for x in ['M1', 'MOff', 'M3']]
 
     def _add_middleware(self, mw):
         super(TestMiddlewareManager, self)._add_middleware(mw)

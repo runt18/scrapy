@@ -43,10 +43,10 @@ class HTTP11DownloadHandler(object):
             # use context factory defaults
             self._contextFactory = self._contextFactoryClass()
             msg = """
- '%s' does not accept `method` argument (type OpenSSL.SSL method,\
+ '{0!s}' does not accept `method` argument (type OpenSSL.SSL method,\
  e.g. OpenSSL.SSL.SSLv23_METHOD).\
- Please upgrade your context factory class to handle it or ignore it.""" % (
-                settings['DOWNLOADER_CLIENTCONTEXTFACTORY'],)
+ Please upgrade your context factory class to handle it or ignore it.""".format(
+                settings['DOWNLOADER_CLIENTCONTEXTFACTORY'])
             warnings.warn(msg)
         self._default_maxsize = settings.getint('DOWNLOAD_MAXSIZE')
         self._default_warnsize = settings.getint('DOWNLOAD_WARNSIZE')
@@ -281,7 +281,7 @@ class ScrapyAgent(object):
         if self._txresponse:
             self._txresponse._transport.stopProducing()
 
-        raise TimeoutError("Getting %s took longer than %s seconds." % (url, timeout))
+        raise TimeoutError("Getting {0!s} took longer than {1!s} seconds.".format(url, timeout))
 
     def _cb_latency(self, result, request, start_time):
         request.meta['download_latency'] = time() - start_time

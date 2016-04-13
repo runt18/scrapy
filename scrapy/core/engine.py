@@ -205,7 +205,7 @@ class ExecutionEngine(object):
 
     def crawl(self, request, spider):
         assert spider in self.open_spiders, \
-            "Spider %r not opened when crawling: %s" % (spider.name, request)
+            "Spider {0!r} not opened when crawling: {1!s}".format(spider.name, request)
         self.schedule(request, spider)
         self.slot.nextcall.schedule()
 
@@ -252,8 +252,8 @@ class ExecutionEngine(object):
 
     @defer.inlineCallbacks
     def open_spider(self, spider, start_requests=(), close_if_idle=True):
-        assert self.has_capacity(), "No free spider slot when opening %r" % \
-            spider.name
+        assert self.has_capacity(), "No free spider slot when opening {0!r}".format( \
+            spider.name)
         logger.info("Spider opened", extra={'spider': spider})
         nextcall = CallLaterOnce(self._next_request, spider)
         scheduler = self.scheduler_cls.from_crawler(self.crawler)

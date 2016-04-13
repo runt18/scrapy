@@ -37,7 +37,7 @@ class BaseItemExporter(object):
         self.export_empty_fields = options.pop('export_empty_fields', False)
         self.encoding = options.pop('encoding', 'utf-8')
         if not dont_fail and options:
-            raise TypeError("Unexpected options: %s" % ', '.join(options.keys()))
+            raise TypeError("Unexpected options: {0!s}".format(', '.join(options.keys())))
 
     def export_item(self, item):
         raise NotImplementedError

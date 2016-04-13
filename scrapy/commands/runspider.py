@@ -14,7 +14,7 @@ def _import_file(filepath):
     dirname, file = os.path.split(abspath)
     fname, fext = os.path.splitext(file)
     if fext != '.py':
-        raise ValueError("Not a Python source file: %s" % abspath)
+        raise ValueError("Not a Python source file: {0!s}".format(abspath))
     if dirname:
         sys.path = [dirname] + sys.path
     try:
@@ -74,14 +74,14 @@ class Command(ScrapyCommand):
             raise UsageError()
         filename = args[0]
         if not os.path.exists(filename):
-            raise UsageError("File not found: %s\n" % filename)
+            raise UsageError("File not found: {0!s}\n".format(filename))
         try:
             module = _import_file(filename)
         except (ImportError, ValueError) as e:
-            raise UsageError("Unable to load %r: %s\n" % (filename, e))
+            raise UsageError("Unable to load {0!r}: {1!s}\n".format(filename, e))
         spclasses = list(iter_spider_classes(module))
         if not spclasses:
-            raise UsageError("No spider found in file: %s\n" % filename)
+            raise UsageError("No spider found in file: {0!s}\n".format(filename))
         spidercls = spclasses.pop()
 
         self.crawler_process.crawl(spidercls, **opts.spargs)

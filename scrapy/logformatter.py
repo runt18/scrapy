@@ -32,7 +32,7 @@ class LogFormatter(object):
     """
 
     def crawled(self, request, response, spider):
-        flags = ' %s' % str(response.flags) if response.flags else ''
+        flags = ' {0!s}'.format(str(response.flags)) if response.flags else ''
         return {
             'level': logging.DEBUG,
             'msg': CRAWLEDMSG,

@@ -163,7 +163,7 @@ class Scraper(object):
             spider=spider
         )
         self.crawler.stats.inc_value(
-            "spider_exceptions/%s" % _failure.value.__class__.__name__,
+            "spider_exceptions/{0!s}".format(_failure.value.__class__.__name__),
             spider=spider
         )
 

@@ -329,7 +329,7 @@ class RFC2616PolicyTest(DefaultStorageTest):
         ]
         with self._middleware() as mw:
             for idx, (shouldcache, status, headers) in enumerate(responses):
-                req0 = Request('http://example-%d.com' % idx)
+                req0 = Request('http://example-{0:d}.com'.format(idx))
                 res0 = Response(req0.url, status=status, headers=headers)
                 res1 = self._process_requestresponse(mw, req0, res0)
                 res304 = res0.replace(status=304)
@@ -348,7 +348,7 @@ class RFC2616PolicyTest(DefaultStorageTest):
         with self._middleware(HTTPCACHE_ALWAYS_STORE=True) as mw:
             for idx, (_, status, headers) in enumerate(responses):
                 shouldcache = 'no-store' not in headers.get('Cache-Control', '') and status != 304
-                req0 = Request('http://example2-%d.com' % idx)
+                req0 = Request('http://example2-{0:d}.com'.format(idx))
                 res0 = Response(req0.url, status=status, headers=headers)
                 res1 = self._process_requestresponse(mw, req0, res0)
                 res304 = res0.replace(status=304)
@@ -391,7 +391,7 @@ class RFC2616PolicyTest(DefaultStorageTest):
         ]
         with self._middleware() as mw:
             for idx, (status, headers) in enumerate(sampledata):
-                req0 = Request('http://example-%d.com' % idx)
+                req0 = Request('http://example-{0:d}.com'.format(idx))
                 res0 = Response(req0.url, status=status, headers=headers)
                 # cache fresh response
                 res1 = self._process_requestresponse(mw, req0, res0)
@@ -428,7 +428,7 @@ class RFC2616PolicyTest(DefaultStorageTest):
         ]
         with self._middleware() as mw:
             for idx, (status, headers) in enumerate(sampledata):
-                req0 = Request('http://example-%d.com' % idx)
+                req0 = Request('http://example-{0:d}.com'.format(idx))
                 res0a = Response(req0.url, status=status, headers=headers)
                 # cache expired response
                 res1 = self._process_requestresponse(mw, req0, res0a)
@@ -495,7 +495,7 @@ class RFC2616PolicyTest(DefaultStorageTest):
         ]
         with self._middleware(HTTPCACHE_IGNORE_RESPONSE_CACHE_CONTROLS=['no-cache', 'no-store']) as mw:
             for idx, (status, headers) in enumerate(sampledata):
-                req0 = Request('http://example-%d.com' % idx)
+                req0 = Request('http://example-{0:d}.com'.format(idx))
                 res0 = Response(req0.url, status=status, headers=headers)
                 # cache fresh response
                 res1 = self._process_requestresponse(mw, req0, res0)

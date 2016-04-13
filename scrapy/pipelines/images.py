@@ -79,8 +79,7 @@ class ImagesPipeline(FilesPipeline):
 
         width, height = orig_image.size
         if width < self.MIN_WIDTH or height < self.MIN_HEIGHT:
-            raise ImageException("Image too small (%dx%d < %dx%d)" %
-                                 (width, height, self.MIN_WIDTH, self.MIN_HEIGHT))
+            raise ImageException("Image too small ({0:d}x{1:d} < {2:d}x{3:d})".format(width, height, self.MIN_WIDTH, self.MIN_HEIGHT))
 
         image, buf = self.convert_image(orig_image)
         yield path, image, buf
@@ -140,7 +139,7 @@ class ImagesPipeline(FilesPipeline):
         ## end of deprecation warning block
 
         image_guid = hashlib.sha1(to_bytes(url)).hexdigest()  # change to request.url after deprecation
-        return 'full/%s.jpg' % (image_guid)
+        return 'full/{0!s}.jpg'.format((image_guid))
 
     def thumb_path(self, request, thumb_id, response=None, info=None):
         ## start of deprecation warning block (can be removed in the future)
@@ -165,7 +164,7 @@ class ImagesPipeline(FilesPipeline):
         ## end of deprecation warning block
 
         thumb_guid = hashlib.sha1(to_bytes(url)).hexdigest()  # change to request.url after deprecation
-        return 'thumbs/%s/%s.jpg' % (thumb_id, thumb_guid)
+        return 'thumbs/{0!s}/{1!s}.jpg'.format(thumb_id, thumb_guid)
 
     # deprecated
     def file_key(self, url):

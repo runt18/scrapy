@@ -32,7 +32,7 @@ class SpiderMiddlewareManager(MiddlewareManager):
             self.methods['process_start_requests'].insert(0, mw.process_start_requests)
 
     def scrape_response(self, scrape_func, response, request, spider):
-        fname = lambda f:'%s.%s' % (
+        fname = lambda f:'{0!s}.{1!s}'.format(
                 six.get_method_self(f).__class__.__name__,
                 six.get_method_function(f).__name__)
 
@@ -53,8 +53,7 @@ class SpiderMiddlewareManager(MiddlewareManager):
             for method in self.methods['process_spider_exception']:
                 result = method(response=response, exception=exception, spider=spider)
                 assert result is None or _isiterable(result), \
-                    'Middleware %s must returns None, or an iterable object, got %s ' % \
-                    (fname(method), type(result))
+                    'Middleware {0!s} must returns None, or an iterable object, got {1!s} '.format(fname(method), type(result))
                 if result is not None:
                     return result
             return _failure
@@ -63,8 +62,7 @@ class SpiderMiddlewareManager(MiddlewareManager):
             for method in self.methods['process_spider_output']:
                 result = method(response=response, result=result, spider=spider)
                 assert _isiterable(result), \
-                    'Middleware %s must returns an iterable object, got %s ' % \
-                    (fname(method), type(result))
+                    'Middleware {0!s} must returns an iterable object, got {1!s} '.format(fname(method), type(result))
             return result
 
         dfd = mustbe_deferred(process_spider_input, response)

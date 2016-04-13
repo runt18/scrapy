@@ -82,8 +82,7 @@ class MemoryUsage(object):
             logger.error("Memory usage exceeded %(memusage)dM. Shutting down Scrapy...",
                          {'memusage': mem}, extra={'crawler': self.crawler})
             if self.notify_mails:
-                subj = "%s terminated: memory usage exceeded %dM at %s" % \
-                        (self.crawler.settings['BOT_NAME'], mem, socket.gethostname())
+                subj = "{0!s} terminated: memory usage exceeded {1:d}M at {2!s}".format(self.crawler.settings['BOT_NAME'], mem, socket.gethostname())
                 self._send_report(self.notify_mails, subj)
                 self.crawler.stats.set_value('memusage/limit_notified', 1)
 
@@ -103,8 +102,7 @@ class MemoryUsage(object):
             logger.warning("Memory usage reached %(memusage)dM",
                            {'memusage': mem}, extra={'crawler': self.crawler})
             if self.notify_mails:
-                subj = "%s warning: memory usage reached %dM at %s" % \
-                        (self.crawler.settings['BOT_NAME'], mem, socket.gethostname())
+                subj = "{0!s} warning: memory usage reached {1:d}M at {2!s}".format(self.crawler.settings['BOT_NAME'], mem, socket.gethostname())
                 self._send_report(self.notify_mails, subj)
                 self.crawler.stats.set_value('memusage/warning_notified', 1)
             self.warned = True
@@ -112,9 +110,9 @@ class MemoryUsage(object):
     def _send_report(self, rcpts, subject):
         """send notification mail with some additional useful info"""
         stats = self.crawler.stats
-        s = "Memory usage at engine startup : %dM\r\n" % (stats.get_value('memusage/startup')/1024/1024)
-        s += "Maximum memory usage           : %dM\r\n" % (stats.get_value('memusage/max')/1024/1024)
-        s += "Current memory usage           : %dM\r\n" % (self.get_virtual_size()/1024/1024)
+        s = "Memory usage at engine startup : {0:d}M\r\n".format((stats.get_value('memusage/startup')/1024/1024))
+        s += "Maximum memory usage           : {0:d}M\r\n".format((stats.get_value('memusage/max')/1024/1024))
+        s += "Current memory usage           : {0:d}M\r\n".format((self.get_virtual_size()/1024/1024))
 
         s += "ENGINE STATUS ------------------------------------------------------- \r\n"
         s += "\r\n"

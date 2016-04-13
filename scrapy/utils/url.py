@@ -24,7 +24,7 @@ def url_is_from_any_domain(url, domains):
     if not host:
         return False
     domains = [d.lower() for d in domains]
-    return any((host == d) or (host.endswith('.%s' % d)) for d in domains)
+    return any((host == d) or (host.endswith('.{0!s}'.format(d))) for d in domains)
 
 
 def url_is_from_spider(url, spider):

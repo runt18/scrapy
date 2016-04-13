@@ -51,7 +51,7 @@ class RobotsTxtMiddleware(object):
 
         if netloc not in self._parsers:
             self._parsers[netloc] = Deferred()
-            robotsurl = "%s://%s/robots.txt" % (url.scheme, url.netloc)
+            robotsurl = "{0!s}://{1!s}/robots.txt".format(url.scheme, url.netloc)
             robotsreq = Request(
                 robotsurl,
                 priority=self.DOWNLOAD_PRIORITY,

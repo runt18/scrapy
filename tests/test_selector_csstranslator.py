@@ -16,7 +16,7 @@ class DeprecatedClassesTest(unittest.TestCase):
         for cls in [ScrapyHTMLTranslator, ScrapyGenericTranslator, ScrapyXPathExpr]:
             with warnings.catch_warnings(record=True) as w:
                 obj = cls()
-                self.assertIn('%s is deprecated' % cls.__name__, str(w[-1].message),
-                              'Missing deprecate warning for %s' % cls.__name__)
+                self.assertIn('{0!s} is deprecated'.format(cls.__name__), str(w[-1].message),
+                              'Missing deprecate warning for {0!s}'.format(cls.__name__))
 
 

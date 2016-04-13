@@ -26,7 +26,7 @@ class Spider(object_ref):
         if name is not None:
             self.name = name
         elif not getattr(self, 'name', None):
-            raise ValueError("%s must have a name" % type(self).__name__)
+            raise ValueError("{0!s} must have a name".format(type(self).__name__))
         self.__dict__.update(kwargs)
         if not hasattr(self, 'start_urls'):
             self.start_urls = []
@@ -90,7 +90,7 @@ class Spider(object_ref):
             return closed(reason)
 
     def __str__(self):
-        return "<%s %r at 0x%0x>" % (type(self).__name__, self.name, id(self))
+        return "<{0!s} {1!r} at 0x{2:0x}>".format(type(self).__name__, self.name, id(self))
 
     __repr__ = __str__
 

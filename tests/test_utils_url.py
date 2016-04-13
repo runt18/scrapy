@@ -302,7 +302,7 @@ def create_guess_scheme_t(args):
     def do_expected(self):
         url = guess_scheme(args[0])
         assert url.startswith(args[1]), \
-            'Wrong scheme guessed: for `%s` got `%s`, expected `%s...`' % (
+            'Wrong scheme guessed: for `{0!s}` got `{1!s}`, expected `{2!s}...`'.format(
                 args[0], url, args[1])
     return do_expected
 
@@ -340,7 +340,7 @@ for k, args in enumerate ([
 
         ], start=1):
     t_method = create_guess_scheme_t(args)
-    t_method.__name__ = 'test_uri_%03d' % k
+    t_method.__name__ = 'test_uri_{0:03d}'.format(k)
     setattr (GuessSchemeTest, t_method.__name__, t_method)
 
 # TODO: the following tests do not pass with current implementation
@@ -349,7 +349,7 @@ for k, args in enumerate ([
              'Windows filepath are not supported for scrapy shell'),
         ], start=1):
     t_method = create_skipped_scheme_t(args)
-    t_method.__name__ = 'test_uri_skipped_%03d' % k
+    t_method.__name__ = 'test_uri_skipped_{0:03d}'.format(k)
     setattr (GuessSchemeTest, t_method.__name__, t_method)
 
 

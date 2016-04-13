@@ -485,7 +485,7 @@ class CrawlerSettings(Settings):
         return Settings.__getitem__(self, opt_name)
 
     def __str__(self):
-        return "<CrawlerSettings module=%r>" % self.settings_module
+        return "<CrawlerSettings module={0!r}>".format(self.settings_module)
 
 CrawlerSettings = create_deprecated_class(
     'CrawlerSettings', CrawlerSettings,

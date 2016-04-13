@@ -68,10 +68,9 @@ class ReturnsContract(Contract):
             if self.min_bound == self.max_bound:
                 expected = self.min_bound
             else:
-                expected = '%s..%s' % (self.min_bound, self.max_bound)
+                expected = '{0!s}..{1!s}'.format(self.min_bound, self.max_bound)
 
-            raise ContractFail("Returned %s %s, expected %s" % \
-                (occurrences, self.obj_name, expected))
+            raise ContractFail("Returned {0!s} {1!s}, expected {2!s}".format(occurrences, self.obj_name, expected))
 
 
 class ScrapesContract(Contract):
@@ -86,4 +85,4 @@ class ScrapesContract(Contract):
             if isinstance(x, (BaseItem, dict)):
                 for arg in self.args:
                     if not arg in x:
-                        raise ContractFail("'%s' field is missing" % arg)
+                        raise ContractFail("'{0!s}' field is missing".format(arg))

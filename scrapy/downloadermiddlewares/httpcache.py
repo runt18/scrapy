@@ -52,7 +52,7 @@ class HttpCacheMiddleware(object):
             self.stats.inc_value('httpcache/miss', spider=spider)
             if self.ignore_missing:
                 self.stats.inc_value('httpcache/ignore', spider=spider)
-                raise IgnoreRequest("Ignored request not in cache: %s" % request)
+                raise IgnoreRequest("Ignored request not in cache: {0!s}".format(request))
             return  # first time request
 
         # Return cached response only if not expired

@@ -101,7 +101,7 @@ class ProxyConnectTestCase(TestCase):
         self._assert_got_response_code(407, l)
 
     def _assert_got_response_code(self, code, log):
-        self.assertEqual(str(log).count('Crawled (%d)' % code), 1)
+        self.assertEqual(str(log).count('Crawled ({0:d})'.format(code)), 1)
 
     def _assert_got_tunnel_error(self, log):
         self.assertEqual(str(log).count('TunnelError'), 1)

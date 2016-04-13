@@ -191,8 +191,8 @@ def _callAppFunction(function):
     try:
         function()
     except:
-        log.err(None, "Unexpected exception from %s" % (
-                fullyQualifiedName(function),))
+        log.err(None, "Unexpected exception from {0!s}".format(
+                fullyQualifiedName(function)))
 
 
 
@@ -584,13 +584,13 @@ class Request:
         # weren't limited to issuing HTTP/1.1 requests.
         requestLines = []
         requestLines.append(
-            '%s %s HTTP/1.1\r\n' % (self.method, self.uri))
+            '{0!s} {1!s} HTTP/1.1\r\n'.format(self.method, self.uri))
         if not self.persistent:
             requestLines.append('Connection: close\r\n')
         if TEorCL is not None:
             requestLines.append(TEorCL)
         for name, values in self.headers.getAllRawHeaders():
-            requestLines.extend(['%s: %s\r\n' % (name, v) for v in values])
+            requestLines.extend(['{0!s}: {1!s}\r\n'.format(name, v) for v in values])
         requestLines.append('\r\n')
         transport.writeSequence(requestLines)
 
@@ -626,7 +626,7 @@ class Request:
         """
         self._writeHeaders(
             transport,
-            'Content-Length: %d\r\n' % (self.bodyProducer.length,))
+            'Content-Length: {0:d}\r\n'.format(self.bodyProducer.length))
 
         # This Deferred is used to signal an error in the data written to the
         # encoder below.  It can only errback and it will only do so before too
@@ -859,7 +859,7 @@ def makeStatefulDispatcher(name, template):
         func = getattr(self, '_' + name + '_' + self._state, None)
         if func is None:
             raise RuntimeError(
-                "%r has no %s method in state %s" % (self, name, self._state))
+                "{0!r} has no {1!s} method in state {2!s}".format(self, name, self._state))
         return func(*args, **kwargs)
     dispatcher.__doc__ = template.__doc__
     return dispatcher
@@ -1120,7 +1120,7 @@ class ChunkedEncoder:
         """
         if self.transport is None:
             raise ExcessWrite()
-        self.transport.writeSequence(("%x\r\n" % len(data), data, "\r\n"))
+        self.transport.writeSequence(("{0:x}\r\n".format(len(data)), data, "\r\n"))
 
 
     def unregisterProducer(self):

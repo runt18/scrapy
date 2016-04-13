@@ -39,8 +39,8 @@ class TextResponse(Response):
         self._body = b''  # used by encoding detection
         if isinstance(body, six.text_type):
             if self._encoding is None:
-                raise TypeError('Cannot convert unicode body - %s has no encoding' %
-                    type(self).__name__)
+                raise TypeError('Cannot convert unicode body - {0!s} has no encoding'.format(
+                    type(self).__name__))
             self._body = body.encode(self._encoding)
         else:
             super(TextResponse, self)._set_body(body)
@@ -68,7 +68,7 @@ class TextResponse(Response):
         # _body_inferred_encoding is called
         benc = self.encoding
         if self._cached_ubody is None:
-            charset = 'charset=%s' % benc
+            charset = 'charset={0!s}'.format(benc)
             self._cached_ubody = html_to_unicode(charset, self.body)[1]
         return self._cached_ubody
 

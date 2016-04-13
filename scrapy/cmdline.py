@@ -38,7 +38,7 @@ def _get_commands_from_entry_points(inproject, group='scrapy.commands'):
         if inspect.isclass(obj):
             cmds[entry_point.name] = obj()
         else:
-            raise Exception("Invalid entry point %s" % entry_point.name)
+            raise Exception("Invalid entry point {0!s}".format(entry_point.name))
     return cmds
 
 def _get_commands_dict(settings, inproject):
@@ -59,10 +59,10 @@ def _pop_command_name(argv):
 
 def _print_header(settings, inproject):
     if inproject:
-        print("Scrapy %s - project: %s\n" % (scrapy.__version__, \
+        print("Scrapy {0!s} - project: {1!s}\n".format(scrapy.__version__, \
             settings['BOT_NAME']))
     else:
-        print("Scrapy %s - no active project\n" % scrapy.__version__)
+        print("Scrapy {0!s} - no active project\n".format(scrapy.__version__))
 
 def _print_commands(settings, inproject):
     _print_header(settings, inproject)
@@ -71,7 +71,7 @@ def _print_commands(settings, inproject):
     print("Available commands:")
     cmds = _get_commands_dict(settings, inproject)
     for cmdname, cmdclass in sorted(cmds.items()):
-        print("  %-13s %s" % (cmdname, cmdclass.short_desc()))
+        print("  {0:<13!s} {1!s}".format(cmdname, cmdclass.short_desc()))
     if not inproject:
         print()
         print("  [ more ]      More commands available when run from project directory")
@@ -80,7 +80,7 @@ def _print_commands(settings, inproject):
 
 def _print_unknown_command(settings, cmdname, inproject):
     _print_header(settings, inproject)
-    print("Unknown command: %s\n" % cmdname)
+    print("Unknown command: {0!s}\n".format(cmdname))
     print('Use "scrapy" to see available commands')
 
 def _run_print_help(parser, func, *a, **kw):
@@ -130,7 +130,7 @@ def execute(argv=None, settings=None):
         sys.exit(2)
 
     cmd = cmds[cmdname]
-    parser.usage = "scrapy %s %s" % (cmdname, cmd.syntax())
+    parser.usage = "scrapy {0!s} {1!s}".format(cmdname, cmd.syntax())
     parser.description = cmd.long_desc()
     settings.setdict(cmd.default_settings, priority='command')
     cmd.settings = settings
@@ -150,7 +150,7 @@ def _run_command(cmd, args, opts):
 
 def _run_command_profiled(cmd, args, opts):
     if opts.profile:
-        sys.stderr.write("scrapy: writing cProfile stats to %r\n" % opts.profile)
+        sys.stderr.write("scrapy: writing cProfile stats to {0!r}\n".format(opts.profile))
     loc = locals()
     p = cProfile.Profile()
     p.runctx('cmd.run(args, opts)', globals(), loc)

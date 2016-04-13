@@ -82,8 +82,7 @@ def start_test_site(debug=False):
 
     port = reactor.listenTCP(0, server.Site(r), interface="127.0.0.1")
     if debug:
-        print("Test server running at http://localhost:%d/ - hit Ctrl-C to finish." \
-            % port.getHost().port)
+        print("Test server running at http://localhost:{0:d}/ - hit Ctrl-C to finish.".format(port.getHost().port))
     return port
 
 
@@ -130,7 +129,7 @@ class CrawlerRun(object):
         self.deferred.callback(None)
 
     def geturl(self, path):
-        return "http://localhost:%s%s" % (self.portno, path)
+        return "http://localhost:{0!s}{1!s}".format(self.portno, path)
 
     def getpath(self, url):
         u = urlparse(url)
@@ -180,7 +179,7 @@ class EngineTest(unittest.TestCase):
                            "/item1.html", "/item2.html", "/item999.html"]
         urls_visited = set([rp[0].url for rp in self.run.respplug])
         urls_expected = set([self.run.geturl(p) for p in must_be_visited])
-        assert urls_expected <= urls_visited, "URLs not visited: %s" % list(urls_expected - urls_visited)
+        assert urls_expected <= urls_visited, "URLs not visited: {0!s}".format(list(urls_expected - urls_visited))
 
     def _assert_scheduled_requests(self, urls_to_visit=None):
         self.assertEqual(urls_to_visit, len(self.run.reqplug))

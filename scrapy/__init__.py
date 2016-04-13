@@ -15,7 +15,7 @@ del pkgutil
 # Check minimum required Python version
 import sys
 if sys.version_info < (2, 7):
-    print("Scrapy %s requires Python 2.7" % __version__)
+    print("Scrapy {0!s} requires Python 2.7".format(__version__))
     sys.exit(1)
 
 # Ignore noisy twisted deprecation warnings

@@ -23,10 +23,10 @@ class ProcessTest(object):
 
     def _process_finished(self, pp, cmd, check_code):
         if pp.exitcode and check_code:
-            msg = "process %s exit with code %d" % (cmd, pp.exitcode)
-            msg += "\n>>> stdout <<<\n%s" % pp.out
+            msg = "process {0!s} exit with code {1:d}".format(cmd, pp.exitcode)
+            msg += "\n>>> stdout <<<\n{0!s}".format(pp.out)
             msg += "\n"
-            msg += "\n>>> stderr <<<\n%s" % pp.err
+            msg += "\n>>> stderr <<<\n{0!s}".format(pp.err)
             raise RuntimeError(msg)
         return pp.exitcode, pp.out, pp.err
 

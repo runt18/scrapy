@@ -96,13 +96,13 @@ class Command(ScrapyCommand):
 
         if opts.verbose:
             for level in range(1, self.max_level+1):
-                print('\n>>> DEPTH LEVEL: %s <<<' % level)
+                print('\n>>> DEPTH LEVEL: {0!s} <<<'.format(level))
                 if not opts.noitems:
                     self.print_items(level, colour)
                 if not opts.nolinks:
                     self.print_requests(level, colour)
         else:
-            print('\n>>> STATUS DEPTH LEVEL %s <<<' % self.max_level)
+            print('\n>>> STATUS DEPTH LEVEL {0!s} <<<'.format(self.max_level))
             if not opts.noitems:
                 self.print_items(colour=colour)
             if not opts.nolinks:

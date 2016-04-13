@@ -29,15 +29,15 @@ class Command(ScrapyCommand):
             import lxml.etree
             lxml_version = ".".join(map(str, lxml.etree.LXML_VERSION))
             libxml2_version = ".".join(map(str, lxml.etree.LIBXML_VERSION))
-            print("Scrapy    : %s" % scrapy.__version__)
-            print("lxml      : %s" % lxml_version)
-            print("libxml2   : %s" % libxml2_version)
-            print("Twisted   : %s" % twisted.version.short())
-            print("Python    : %s" % sys.version.replace("\n", "- "))
-            print("pyOpenSSL : %s" % self._get_openssl_version())
-            print("Platform  : %s" % platform.platform())
+            print("Scrapy    : {0!s}".format(scrapy.__version__))
+            print("lxml      : {0!s}".format(lxml_version))
+            print("libxml2   : {0!s}".format(libxml2_version))
+            print("Twisted   : {0!s}".format(twisted.version.short()))
+            print("Python    : {0!s}".format(sys.version.replace("\n", "- ")))
+            print("pyOpenSSL : {0!s}".format(self._get_openssl_version()))
+            print("Platform  : {0!s}".format(platform.platform()))
         else:
-            print("Scrapy %s" % scrapy.__version__)
+            print("Scrapy {0!s}".format(scrapy.__version__))
 
     def _get_openssl_version(self):
         try:

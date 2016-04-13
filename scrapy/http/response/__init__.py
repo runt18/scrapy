@@ -37,7 +37,7 @@ class Response(object_ref):
         if isinstance(url, str):
             self._url = url
         else:
-            raise TypeError('%s url must be str, got %s:' % (type(self).__name__,
+            raise TypeError('{0!s} url must be str, got {1!s}:'.format(type(self).__name__,
                 type(url).__name__))
 
     url = property(_get_url, obsolete_setter(_set_url, 'url'))
@@ -59,7 +59,7 @@ class Response(object_ref):
     body = property(_get_body, obsolete_setter(_set_body, 'body'))
 
     def __str__(self):
-        return "<%d %s>" % (self.status, self.url)
+        return "<{0:d} {1!s}>".format(self.status, self.url)
 
     __repr__ = __str__
 

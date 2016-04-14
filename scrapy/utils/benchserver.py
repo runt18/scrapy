@@ -39,6 +39,6 @@ if __name__ == '__main__':
 
     def _print_listening():
         httpHost = httpPort.getHost()
-        print("Bench server at http://{}:{}".format(httpHost.host, httpHost.port))
+        print("Bench server at http://{0}:{1}".format(httpHost.host, httpHost.port))
     reactor.callWhenRunning(_print_listening)
     reactor.run()

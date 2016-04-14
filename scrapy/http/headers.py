@@ -34,7 +34,7 @@ class Headers(CaselessDict):
         elif isinstance(x, int):
             return six.text_type(x).encode(self.encoding)
         else:
-            raise TypeError('Unsupported value type: {}'.format(type(x)))
+            raise TypeError('Unsupported value type: {0}'.format(type(x)))
 
     def __getitem__(self, key):
         try:

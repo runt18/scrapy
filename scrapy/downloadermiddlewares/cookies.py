@@ -56,8 +56,8 @@ class CookiesMiddleware(object):
             cl = [to_native_str(c, errors='replace')
                   for c in request.headers.getlist('Cookie')]
             if cl:
-                cookies = "\n".join("Cookie: {}\n".format(c) for c in cl)
-                msg = "Sending cookies to: {}\n{}".format(request, cookies)
+                cookies = "\n".join("Cookie: {0}\n".format(c) for c in cl)
+                msg = "Sending cookies to: {0}\n{1}".format(request, cookies)
                 logger.debug(msg, extra={'spider': spider})
 
     def _debug_set_cookie(self, response, spider):
@@ -65,8 +65,8 @@ class CookiesMiddleware(object):
             cl = [to_native_str(c, errors='replace')
                   for c in response.headers.getlist('Set-Cookie')]
             if cl:
-                cookies = "\n".join("Set-Cookie: {}\n".format(c) for c in cl)
-                msg = "Received cookies from: {}\n{}".format(response, cookies)
+                cookies = "\n".join("Set-Cookie: {0}\n".format(c) for c in cl)
+                msg = "Received cookies from: {0}\n{1}".format(response, cookies)
                 logger.debug(msg, extra={'spider': spider})
 
     def _format_cookie(self, cookie):

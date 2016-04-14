@@ -40,7 +40,7 @@ class SpiderLoader(object):
         try:
             return self._spiders[spider_name]
         except KeyError:
-            raise KeyError("Spider not found: {}".format(spider_name))
+            raise KeyError("Spider not found: {0}".format(spider_name))
 
     def find_by_request(self, request):
         """

@@ -47,4 +47,4 @@ class Command(ScrapyCommand):
         except AttributeError:
             openssl = 'Unknown OpenSSL version'
 
-        return '{} ({})'.format(OpenSSL.version.__version__, openssl)
+        return '{0} ({1})'.format(OpenSSL.version.__version__, openssl)

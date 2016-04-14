@@ -154,7 +154,7 @@ class LogCounterHandler(logging.Handler):
         self.crawler = crawler
 
     def emit(self, record):
-        sname = 'log_count/{}'.format(record.levelname)
+        sname = 'log_count/{0}'.format(record.levelname)
         self.crawler.stats.inc_value(sname)
 
 

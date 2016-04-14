@@ -120,7 +120,7 @@ def create_deprecated_class(name, new_class, clsdict=None,
 def _clspath(cls, forced=None):
     if forced is not None:
         return forced
-    return '{}.{}'.format(cls.__module__, cls.__name__)
+    return '{0}.{1}'.format(cls.__module__, cls.__name__)
 
 
 DEPRECATION_RULES = [
@@ -152,7 +152,7 @@ def update_classpath(path):
     for prefix, replacement in DEPRECATION_RULES:
         if path.startswith(prefix):
             new_path = path.replace(prefix, replacement, 1)
-            warnings.warn("`{}` class is deprecated, use `{}` instead".format(path, new_path),
+            warnings.warn("`{0}` class is deprecated, use `{1}` instead".format(path, new_path),
                           ScrapyDeprecationWarning)
             return new_path
     return path
